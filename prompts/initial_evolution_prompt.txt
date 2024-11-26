@@ -1,0 +1,45 @@
+以下のinstructionをより複雑なものに書き換えてください。
+なお、「複雑」とは、ChatGPTやGPT-4のようなAIアシスタントにとって扱いが少し難しくなることを言います。
+
+Step1: instructionを注意深く読み、この<instruction>をより複雑にするために可能な方法を<method_list>にすべて列挙する
+Step2: Step1で作成した<method_list>に基づいて、<instruction>をより複雑にするための包括的な計画を<plan>として作成してください。計画には、<method_list>からいくつかのmethodを含める必要があります。
+Step3: Stepごとに計画を実行し、<rewritten_instruction>を提出してください。<rewritten_instruction>は<instruction>に10から20語程度を追加する程度で構いません。
+Step4: <rewritten_instruction>を注意深く観察し、不合理な部分を特定してください。<rewritten_instruction>が<instruction>をより複雑なものにしたにすぎず、異なるinstructionになっていないことを確認してください.それらの結果を<evaluation>にまとめてください。
+Step5: <evaluation>の内容を注意深く読み、<rewritten_instruction>を修正する包括的な計画を<modify_plan>として作成してください。
+Step5: Step6の結果を踏まえ、<finally_rewritten_instruction>を提出してください。ここでは、前置きなどはせずに<finally_rewritten_instruction>のみを提出してください。
+
+### Format
+Step1:
+<method_list>
+
+</method_list>
+
+Step2:
+<plan>
+
+</plan>
+
+Step3:
+<rewritten_instruction>
+
+</rewritten_instruction>
+
+Step4:
+<evaluation>
+
+</evaluation>
+
+Step5:
+<modify_plan>
+
+</modify_plan>
+
+Step6:
+<finally_rewritten_instruction>
+
+</finally_rewritten_instruction>
+
+### Instruction
+<instruction>
+INSTRUCTION
+</instruction>

@@ -1,0 +1,11 @@
+python3 optimize_instruction.py \
+    --prompt_dir ./prompts/ \
+    --model_name Qwen/Qwen2.5-32B-Instruct-AWQ \
+    --dataset_name Kendamarron/aya_dataset_ja \
+    --split train \
+    --column_name inputs \
+    --evaluation_size 30 \
+    --max_steps 5 \
+    --repeat_optimization 3 \
+    --batch_size 8 \
+    --output_dir ./output/

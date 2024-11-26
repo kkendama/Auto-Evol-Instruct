@@ -1,0 +1,16 @@
+以下のプロンプトは与えられたinstructionを確実かつ正確に、より複雑なものに書き換えるためのものです。
+このプロンプトを改善して、より確実にinstructionを複雑なものに書き換えられるようにしてください。
+それぞれのStepを注意深く観察し、積極的にStepを追加して処理を改善してください。
+また、既存のStepを見直し、Stepの修正も積極的に行ってください。
+
+### 条件
+- 与えられているプロンプトは<prompt>タグで囲まれている
+- 与えられるinstructionは<instruction>タグで囲むこと
+- 与えられるinstructionを記載する箇所はINSTRUCTIONと記載すること(後の処理でINSTRUCTIONをreplaceするため)
+- Stepは最大20まで増やすことができる
+- 最終的に書き換えたinstructionは<finally_rewritten_instruction>タグで囲んで出力すること
+- まずは改善点を<improvement>タグで囲んで出力し、書き換えたプロンプトのみを<prompt>タグで囲んで出力すること
+- 書き換えた箇所だけでなく、プロンプトの全文を出力すること
+
+### プロンプト
+PROMPT
