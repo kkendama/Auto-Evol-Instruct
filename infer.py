@@ -61,7 +61,7 @@ def evaluator(base_instruction: str, evolved_instruction: str, model_name: str, 
 
     # 1/0以外の値が返ってきた場合はエラー
     if evaluation not in [1, 0]:
-        raise ValueError("Evaluation must be 1 or 0.")
+        evaluator(base_instruction, evolved_instruction, model_name, prompt)
 
     return evaluation
 
@@ -89,11 +89,11 @@ def optimizer(base_prompt: str, model_name: str, prompt: str) -> str:
     # 最適化されたプロンプトを取得
     optimized_prompt = re.search(r"<prompt>(.*)</prompt>", response.choices[0].message.content, re.DOTALL).group(1).strip()
 
-    # 必要な要素が含まれていない場合はエラー
+    # 必要な要素が含まれていない場合は再実行
     if "INSTRUCTION" not in optimized_prompt:
-        raise ValueError("Optimized prompt must contain INSTRUCTION.")
+        optimizer(base_prompt, model_name, prompt)
     
     if "<finally_rewritten_instruction>" not in optimized_prompt and "</finally_rewritten_instruction>" not in optimized_prompt:
-        raise ValueError("Optimized prompt must contain <finally_rewritten_instruction> and </finally_rewritten_instruction>.")
+        optimizer(base_prompt, model_name, prompt)
     
     return optimized_prompt
