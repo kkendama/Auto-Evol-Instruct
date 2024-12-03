@@ -87,7 +87,10 @@ def optimizer(base_prompt: str, model_name: str, prompt: str) -> str:
     )
 
     # 最適化されたプロンプトを取得
-    optimized_prompt = re.search(r"<prompt>(.*)</prompt>", response.choices[0].message.content, re.DOTALL).group(1).strip()
+    try:
+        optimized_prompt = re.search(r"<prompt>(.*)</prompt>", response.choices[0].message.content, re.DOTALL).group(1).strip()
+    except:
+        optimizer(base_prompt, model_name, prompt)
 
     # 必要な要素が含まれていない場合は再実行
     if "INSTRUCTION" not in optimized_prompt:
