@@ -30,7 +30,7 @@ def evolver(instruction: str, model_name: str, prompt: str):
     )
 
     # 最終的に書き換えられたinstructionを取得
-    rewritten_instruction = re.search(r"<finally_rewritten_instruction>(.*)</finally_rewritten_instruction>", response.choices[0].message.content, re.DOTALL).group(1).strip()
+    rewritten_instruction = re.findall(r"<finally_rewritten_instruction>(.*?)</finally_rewritten_instruction>", response.choices[0].message.content, re.DOTALL)[-1]
 
     return rewritten_instruction
 
