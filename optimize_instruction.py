@@ -28,6 +28,10 @@ def get_dataset(dataset_name: str, split: str, column_name: str) -> DatasetDict:
     return dataset
 
 def run_optimize_prompt(args, dataset: DatasetDict):
+    # output_dirの作成
+    if not Path(args.output_dir).exists():
+        Path(args.output_dir).mkdir(parents=True)
+
     # 最適化処理の対象となるサブセットを取得
     sub_dataset = dataset.shuffle(seed=42).select(range(args.evaluation_size))
 
@@ -35,8 +39,8 @@ def run_optimize_prompt(args, dataset: DatasetDict):
     evaluation_prompt, initial_evolution_prompt, optimization_prompt = get_prompt(args.prompt_dir)
 
     # 初期の進化用プロンプトでの評価
-    batch_sub_dataset = sub_dataset.map(lambda x: {"evolved_instruction": evolver(x["base_instruction"], args.model_name, initial_evolution_prompt)})
-    batch_sub_dataset = batch_sub_dataset.map(lambda x: {"evaluation": evaluator(x["base_instruction"], x["evolved_instruction"], args.model_name, evaluation_prompt)})
+    batch_sub_dataset = sub_dataset.map(lambda x: {"evolved_instruction": evolver(x["base_instruction"], args.model_name, initial_evolution_prompt)}, num_proc=args.batch_size)
+    batch_sub_dataset = batch_sub_dataset.map(lambda x: {"evaluation": evaluator(x["base_instruction"], x["evolved_instruction"], args.model_name, evaluation_prompt)}, num_proc=args.batch_size)
     best_score = sum(batch_sub_dataset["evaluation"])
     with open(Path(args.output_dir, f"log.jsonl"), "a") as f:
         f.write(json.dumps({"step": 0, "score": best_score, "prompt": initial_evolution_prompt}) + "\n")
@@ -51,8 +55,8 @@ def run_optimize_prompt(args, dataset: DatasetDict):
             optimized_prompt = optimizer(evolution_prompt, args.model_name, optimization_prompt)
             
             # 進化用プロンプトでの評価
-            batch_sub_dataset = sub_dataset.map(lambda x: {"evolved_instruction": evolver(x["base_instruction"], args.model_name, optimized_prompt)})
-            batch_sub_dataset = batch_sub_dataset.map(lambda x: {"evaluation": evaluator(x["base_instruction"], x["evolved_instruction"], args.model_name, evaluation_prompt)})
+            batch_sub_dataset = sub_dataset.map(lambda x: {"evolved_instruction": evolver(x["base_instruction"], args.model_name, optimized_prompt)}, num_proc=args.batch_size)
+            batch_sub_dataset = batch_sub_dataset.map(lambda x: {"evaluation": evaluator(x["base_instruction"], x["evolved_instruction"], args.model_name, evaluation_prompt)}, num_proc=args.batch_size)
             batch_sub_dataset.to_json(Path(args.output_dir, "steps", f"step_{step}_repeat_{i}.jsonl"))
             score = sum(batch_sub_dataset["evaluation"])
             result.append({"step": step, "score": score, "prompt": optimized_prompt})

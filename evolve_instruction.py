@@ -20,7 +20,7 @@ def get_dataset(dataset_name: str, split: str, column_name: str) -> DatasetDict:
 
 def run_evolve_instruction(args, dataset: DatasetDict):
     evolution_prompt = get_prompt(args.prompt_dir)
-    dataset = dataset.map(lambda x: {"evolved_instruction": evolver(x["base_instruction"], args.model_name, evolution_prompt)})    
+    dataset = dataset.map(lambda x: {"evolved_instruction": evolver(x["base_instruction"], args.model_name, evolution_prompt)}, num_proc=args.batch_size)
     dataset.to_json(Path(args.output_dir, f"evolved_instruction.jsonl"))
 
 def main():
@@ -32,6 +32,7 @@ def main():
     parser.add_argument("--model_name", type=str, required=True)
     parser.add_argument("--prompt_path", type=str, required=True)
     parser.add_argument("--output_dir", type=str, required=True)
+    parser.add_argument("--batch_size", type=int, required=True, default=8)
 
     args = parser.parse_args()
 

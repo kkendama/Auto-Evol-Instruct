@@ -5,4 +5,5 @@ python3 evolve_instruction.py \
     --column_name inputs \
     --model_name Qwen/Qwen2.5-32B-Instruct-AWQ \
     --prompt_path output/best_prompt.txt \
-    --output_dir ./output/
+    --output_dir ./output/ \
+    --batch_size 8 \
