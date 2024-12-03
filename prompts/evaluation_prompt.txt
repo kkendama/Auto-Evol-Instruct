@@ -1,11 +1,11 @@
 以下のinstruction2がinstructionをより複雑なものに書き換えられているか判定してください。
-なお、「複雑」とは、ChatGPTやGPT-4のようなAIアシスタントにとって扱いが少し難しくなることを言います。
+なお、「複雑」とは、ChatGPTやGPT-4のようなAIアシスタントにとって難易度の高いinstructionに変化していることを言います。
 - instruction2がinstruction1をより複雑なものに書き換えている場合は、1を出力すること
 - instruction2がinstruction1をより複雑なものに書き換えていない場合は、0を出力すること
-- instructionが複雑化せず、単に冗長なものに書き換えている場合は0を出力すること
-- instruction2がinstruction1と比べてAIアシスタントにとって扱いづらくなっていない場合は0を出力すること
-- 判定結果は「EVALUATION: 」の後に出力すること
-- 前置きはせず、フォーマットに従って判定結果のみを取得すること
+- instructionが複雑化せず、説明が書き加えられただけなど、冗長なものに書き換えられる場合には0を出力すること
+- instruction2がinstruction1と比べてAIアシスタントにとって難易度の高いものに変化していない場合は0を出力すること
+- 判定結果は「Evaluation: 」の後に出力すること
+- 前置きはせず、フォーマットに従って判定結果のみを出力すること
 
 ### Instruction1
 BASE_INSTRUCTION
@@ -14,4 +14,4 @@ BASE_INSTRUCTION
 EVOLVED_INSTRUCTION
 
 ### Format
-EVALUATION: 1/0
+Evaluation: 1/0
